@@ -1,6 +1,12 @@
 name: 'Deploy Hardcoded HTML to Pages'
 description: 'Deploys the deploy_html folder directly to GitHub Pages'
 
+# 1. This passes the URL back to your main workflow
+outputs:
+  final_url:
+    description: "The URL of the deployed page"
+    value: ${{ steps.deployment.outputs.page_url }}
+
 runs:
   using: "composite"
   steps:
@@ -10,8 +16,8 @@ runs:
     - name: Upload HTML Artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        # ⚠️ MUST be a directory, not a specific file
         path: './.github/action/deploy_html'
 
     - name: Deploy to GitHub Pages
+      id: deployment # 2. Added ID here to capture the output
       uses: actions/deploy-pages@v4
