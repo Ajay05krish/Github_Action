@@ -6,6 +6,8 @@ runs:
   steps:
     - name: Setup GitHub Pages
       uses: actions/configure-pages@v5
+      with:
+        enablement: true
 
     - name: Upload HTML Artifact
       uses: actions/upload-pages-artifact@v3
