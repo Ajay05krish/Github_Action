@@ -3,7 +3,6 @@ name: Call Actions Example
 on:
   workflow_dispatch:
 
-# Mandatory permissions for GitHub Pages
 permissions:
   contents: read
   pages: write
@@ -13,15 +12,22 @@ jobs:
   demonstrate-actions:
     runs-on: ubuntu-latest
     
-    # environment:
-    #   name: github-pages
-    #   url: ${{ steps.deploy_custom.outputs.page_url }}demo.html # Appended demo.html to the URL
+    # 3. This creates the clickable button in the GitHub UI
+    environment:
+      name: github-pages
+      # Grabs the output from the step below and adds demo.html
+      url: ${{ steps.deploy_custom.outputs.final_url }}demo.html
       
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Calls your local action, which uses the hardcoded path automatically
       - name: Run hardcoded deployment action
-        id: deploy_custom
+        id: deploy_custom # 4. ID must match the steps.deploy_custom reference above!
         uses: ./.github/action/deploy_html
+        
+      # Optional: Also prints a big link on the Summary page
+      - name: Print Link to Summary
+        run: |
+          echo "### 🎉 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
+          echo "👉 **[Click here to view your page](${{ steps.deploy_custom.outputs.final_url }}demo.html)**" >> $GITHUB_STEP_SUMMARY
