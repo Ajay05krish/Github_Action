@@ -1,1 +1,16 @@
-hi
+name: 'Deploy HTML to Pages'
+description: 'A reusable custom action that uploads an HTML folder and deploys it to GitHub Pages'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup GitHub Pages
+      uses: actions/configure-pages@v5
+
+    - name: Upload HTML Artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ${{ inputs.html_folder_path }}
+
+    - name: Deploy to GitHub Pages
+      uses: actions/deploy-pages@v4
