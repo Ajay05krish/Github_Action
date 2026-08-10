@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Ajaykrishnaa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .profile-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        button {
+            background-color: #2ea44f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #22863a;
+        }
+        #more-details {
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+            text-align: left;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2ea44f;
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <h1>Ajaykrishnaa</h1>
+        <p>Welcome to my profile!</p>
+        
+        <!-- Button to trigger the JavaScript function -->
+        <button id="toggle-btn" onclick="toggleDetails()">See More</button>
+
+        <!-- Hidden details section -->
+        <div id="more-details">
+            <p><strong>Role:</strong> [Your Job Title / Student Status]</p>
+            <p><strong>Location:</strong> [Your City/Country]</p>
+            <p><strong>About:</strong> [Write a short bio here about your skills, hobbies, or what you are currently working on.]</p>
+            <p><strong>Contact:</strong> [Your Email / LinkedIn]</p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript function to handle the show/hide logic
+        function toggleDetails() {
+            const detailsSection = document.getElementById("more-details");
+            const button = document.getElementById("toggle-btn");
+
+            // Check if the details section is currently hidden
+            if (detailsSection.style.display === "none" || detailsSection.style.display === "") {
+                detailsSection.style.display = "block"; // Show the details
+                button.textContent = "See Less";        // Change button text
+            } else {
+                detailsSection.style.display = "none";  // Hide the details
+                button.textContent = "See More";        // Revert button text
+            }
+        }
+    </script>
+
+</body>
+</html>
