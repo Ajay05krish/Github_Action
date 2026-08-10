@@ -13,9 +13,9 @@ jobs:
   demonstrate-actions:
     runs-on: ubuntu-latest
     
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy_custom.outputs.page_url }}demo.html # Appended demo.html to the URL
+    # environment:
+    #   name: github-pages
+    #   url: ${{ steps.deploy_custom.outputs.page_url }}demo.html # Appended demo.html to the URL
       
     steps:
       - name: Checkout repository
