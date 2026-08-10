@@ -16,7 +16,8 @@ runs:
     - name: Upload HTML Artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: './.github/action/deploy_html'
+        # Pointing to your new path
+        path: './.github/public'
 
     - name: Deploy to GitHub Pages
       id: deployment # 2. Added ID here to capture the output
