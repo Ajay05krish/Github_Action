@@ -15,19 +15,19 @@ jobs:
     # 3. This creates the clickable button in the GitHub UI
     environment:
       name: github-pages
-      # Grabs the output from the step below and adds demo.html
-      url: ${{ steps.deploy_custom.outputs.final_url }}demo.html
+      # Grabs the output URL directly, without demo.html
+      url: ${{ steps.deploy_custom.outputs.final_url }}
       
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Run hardcoded deployment action
-        id: deploy_custom # 4. ID must match the steps.deploy_custom reference above!
+        id: deploy_custom # ID must match the steps.deploy_custom reference above!
         uses: ./.github/action/deploy_html
         
       # Optional: Also prints a big link on the Summary page
       - name: Print Link to Summary
         run: |
           echo "### 🎉 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
-          echo "👉 **[Click here to view your page](${{ steps.deploy_custom.outputs.final_url }}demo.html)**" >> $GITHUB_STEP_SUMMARY
+          echo "👉 **[Click here to view your page](${{ steps.deploy_custom.outputs.final_url }})**" >> $GITHUB_STEP_SUMMARY
