@@ -1,27 +1,27 @@
 name: Call Actions Example
 
 on:
+  workflow_dispatch:
 
-  workflow_dispatch: # Allows manual trigger
+# Mandatory permissions for GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   demonstrate-actions:
     runs-on: ubuntu-latest
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy_custom.outputs.page_url }}demo.html # Appended demo.html to the URL
+      
     steps:
-      # 1. Calling a public action (without inputs)
-      # This downloads your repository code to the runner
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 3. Calling a third-party action from the Marketplace
-      - name: Print a greeting
-        uses: actions/hello-world-javascript-action@v1.1
-        with:
-          who-to-greet: 'GitHub Actions User'
-
-      # 4. Calling a local custom action stored in the same repository
-      # You reference the relative path to the folder containing the action.yml file
-      - name: Run my local action
-        uses: ./.github/actions/my-custom-action
-        with:
-          custom_parameter: 'Testing local action'
+      # Calls your local action, which uses the hardcoded path automatically
+      - name: Run hardcoded deployment action
+        id: deploy_custom
+        uses: ./.github/action/deploy_html
