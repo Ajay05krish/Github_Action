@@ -1,0 +1,27 @@
+name: Call Actions Example
+
+on:
+
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  demonstrate-actions:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Calling a public action (without inputs)
+      # This downloads your repository code to the runner
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 3. Calling a third-party action from the Marketplace
+      - name: Print a greeting
+        uses: actions/hello-world-javascript-action@v1.1
+        with:
+          who-to-greet: 'GitHub Actions User'
+
+      # 4. Calling a local custom action stored in the same repository
+      # You reference the relative path to the folder containing the action.yml file
+      - name: Run my local action
+        uses: ./.github/actions/my-custom-action
+        with:
+          custom_parameter: 'Testing local action'
