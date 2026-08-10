@@ -6,14 +6,12 @@ runs:
   steps:
     - name: Setup GitHub Pages
       uses: actions/configure-pages@v5
-      with:
-        enablement: true
 
     - name: Upload HTML Artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        # Hardcoded to the folder containing your demo.html
-        path: './.github/action/deploy_html/demo.html'
+        # ⚠️ MUST be a directory, not a specific file
+        path: './.github/action/deploy_html'
 
     - name: Deploy to GitHub Pages
       uses: actions/deploy-pages@v4
