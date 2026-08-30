@@ -1,254 +1,418 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
+
+  <meta charset="UTF-8">
 
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
-  />
+  >
 
   <meta
     name="description"
     content="Ajay Krishnaa M - Software Engineer Portfolio"
-  />
+  >
 
-  <title>Ajay Krishnaa M | Software Engineer</title>
+  <title>
+    Ajay Krishnaa M | Software Engineer
+  </title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
 
-  <link rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
+  <!--
+    Apply theme before page renders.
+    Prevents light-theme flash in dark mode.
+  -->
+  <script>
+    (() => {
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
-    rel="stylesheet"
-  />
+      try {
+
+        const savedTheme =
+          localStorage.getItem(
+            "portfolio-theme"
+          );
+
+        const prefersDark =
+          window.matchMedia &&
+          window.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches;
+
+        const theme =
+          savedTheme ||
+          (prefersDark ? "dark" : "light");
+
+        document.documentElement
+          .setAttribute(
+            "data-theme",
+            theme
+          );
+
+      }
+      catch (error) {
+
+        document.documentElement
+          .setAttribute(
+            "data-theme",
+            "light"
+          );
+
+      }
+
+    })();
+  </script>
+
 
   <style>
 
-    /* =============================
-       THEME VARIABLES
+    /* ==============================
+       LIGHT THEME
     ============================== */
 
     :root {
 
       --bg: #f8fafc;
+
       --bg-secondary: #ffffff;
 
       --card: #ffffff;
 
       --text: #0f172a;
+
       --text-secondary: #64748b;
 
       --border: #e2e8f0;
 
       --primary: #2563eb;
+
       --primary-hover: #1d4ed8;
 
       --primary-soft: #eff6ff;
 
-      --nav-bg: rgba(248, 250, 252, 0.85);
+      --nav-bg:
+        rgba(
+          248,
+          250,
+          252,
+          0.88
+        );
 
       --shadow:
-        0 10px 40px rgba(15, 23, 42, 0.06);
+        0 10px 40px
+        rgba(
+          15,
+          23,
+          42,
+          0.06
+        );
 
     }
 
 
+
+    /* ==============================
+       DARK THEME
+    ============================== */
+
     html[data-theme="dark"] {
 
       --bg: #0b1120;
+
       --bg-secondary: #111827;
 
       --card: #111827;
 
       --text: #f8fafc;
+
       --text-secondary: #94a3b8;
 
       --border: #1f2937;
 
       --primary: #60a5fa;
+
       --primary-hover: #93c5fd;
 
-      --primary-soft: rgba(96, 165, 250, 0.09);
+      --primary-soft:
+        rgba(
+          96,
+          165,
+          250,
+          0.09
+        );
 
-      --nav-bg: rgba(11, 17, 32, 0.86);
+      --nav-bg:
+        rgba(
+          11,
+          17,
+          32,
+          0.9
+        );
 
       --shadow:
-        0 15px 45px rgba(0, 0, 0, 0.22);
+        0 15px 45px
+        rgba(
+          0,
+          0,
+          0,
+          0.22
+        );
 
     }
 
 
-    /* =============================
+
+    /* ==============================
        RESET
     ============================== */
 
     * {
+
       margin: 0;
+
       padding: 0;
+
       box-sizing: border-box;
+
     }
 
 
     html {
+
       scroll-behavior: smooth;
+
     }
 
 
     body {
 
-      font-family: "Inter", sans-serif;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
 
-      background: var(--bg);
+      background:
+        var(--bg);
 
-      color: var(--text);
+      color:
+        var(--text);
 
-      line-height: 1.7;
+      line-height:
+        1.7;
 
       transition:
-        background-color .25s ease,
-        color .25s ease;
+        background-color
+        0.25s ease,
+        color
+        0.25s ease;
 
     }
 
 
     a {
-      text-decoration: none;
+
       color: inherit;
+
+      text-decoration: none;
+
     }
 
 
     button {
+
       font: inherit;
+
     }
 
 
     .container {
 
-      width: min(
-        1120px,
-        calc(100% - 40px)
-      );
+      width:
+        min(
+          1120px,
+          calc(100% - 40px)
+        );
 
-      margin-inline: auto;
+      margin-inline:
+        auto;
 
     }
 
 
 
-    /* =============================
+    /* ==============================
        NAVIGATION
     ============================== */
 
     .navbar {
 
-      position: sticky;
+      position:
+        sticky;
 
       top: 0;
 
-      z-index: 100;
+      z-index:
+        100;
 
-      background: var(--nav-bg);
+      background:
+        var(--nav-bg);
 
-      backdrop-filter: blur(18px);
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
 
       border-bottom:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
     }
 
 
     .nav-container {
 
-      height: 72px;
+      min-height:
+        72px;
 
-      display: flex;
+      display:
+        flex;
 
-      align-items: center;
+      align-items:
+        center;
 
-      justify-content: space-between;
+      justify-content:
+        space-between;
 
-      gap: 25px;
+      gap:
+        24px;
 
     }
 
 
     .logo {
 
-      font-family: "Manrope", sans-serif;
+      font-size:
+        19px;
 
-      font-size: 19px;
+      font-weight:
+        800;
 
-      font-weight: 800;
+      letter-spacing:
+        -0.5px;
 
-      letter-spacing: -0.5px;
+      white-space:
+        nowrap;
 
     }
 
 
     .logo span {
-      color: var(--primary);
+
+      color:
+        var(--primary);
+
     }
 
 
     .nav-right {
 
-      display: flex;
+      display:
+        flex;
 
-      align-items: center;
+      align-items:
+        center;
 
-      gap: 20px;
+      gap:
+        18px;
 
     }
 
 
     .nav-links {
 
-      display: flex;
+      display:
+        flex;
 
-      align-items: center;
+      align-items:
+        center;
 
-      gap: 25px;
+      gap:
+        22px;
 
     }
 
 
     .nav-links a {
 
-      font-size: 14px;
+      font-size:
+        14px;
 
-      color: var(--text-secondary);
+      color:
+        var(--text-secondary);
 
-      font-weight: 500;
+      font-weight:
+        500;
 
-      transition: .2s;
+      transition:
+        color
+        0.2s ease;
 
     }
 
 
     .nav-links a:hover {
-      color: var(--primary);
+
+      color:
+        var(--primary);
+
+    }
+
+
+    .linkedin-btn {
+
+      background:
+        var(--text);
+
+      color:
+        var(--bg) !important;
+
+      padding:
+        9px 18px;
+
+      border-radius:
+        10px;
+
     }
 
 
 
-    /* =============================
-       THEME BUTTON
+    /* ==============================
+       THEME SWITCH
     ============================== */
 
     .theme-toggle {
 
-      width: 44px;
+      width:
+        44px;
 
-      height: 44px;
+      height:
+        44px;
 
-      border-radius: 12px;
+      flex-shrink:
+        0;
+
+      border-radius:
+        12px;
 
       border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
       background:
         var(--card);
@@ -256,39 +420,51 @@
       color:
         var(--text);
 
-      cursor: pointer;
+      cursor:
+        pointer;
 
-      display: flex;
+      display:
+        flex;
 
-      align-items: center;
+      align-items:
+        center;
 
-      justify-content: center;
+      justify-content:
+        center;
 
-      transition: .2s;
+      transition:
+        border-color
+        0.2s ease,
+        color
+        0.2s ease;
 
     }
 
 
     .theme-toggle:hover {
 
-      border-color: var(--primary);
+      border-color:
+        var(--primary);
 
-      color: var(--primary);
-
-    }
-
-
-    .theme-icon {
-
-      width: 19px;
-
-      height: 19px;
+      color:
+        var(--primary);
 
     }
 
 
+    .theme-toggle svg {
 
-    /* =============================
+      width:
+        20px;
+
+      height:
+        20px;
+
+    }
+
+
+
+    /* ==============================
        HERO
     ============================== */
 
@@ -303,25 +479,32 @@
 
     .hero-grid {
 
-      display: grid;
+      display:
+        grid;
 
       grid-template-columns:
-        1.2fr .8fr;
+        1.2fr
+        0.8fr;
 
-      gap: 70px;
+      gap:
+        70px;
 
-      align-items: center;
+      align-items:
+        center;
 
     }
 
 
     .availability {
 
-      display: inline-flex;
+      display:
+        inline-flex;
 
-      align-items: center;
+      align-items:
+        center;
 
-      gap: 8px;
+      gap:
+        8px;
 
       padding:
         7px 12px;
@@ -349,11 +532,14 @@
 
     .status-dot {
 
-      width: 8px;
+      width:
+        8px;
 
-      height: 8px;
+      height:
+        8px;
 
-      border-radius: 50%;
+      border-radius:
+        50%;
 
       background:
         #22c55e;
@@ -362,10 +548,6 @@
 
 
     .hero h1 {
-
-      font-family:
-        "Manrope",
-        sans-serif;
 
       font-size:
         clamp(
@@ -382,6 +564,9 @@
 
       max-width:
         760px;
+
+      font-weight:
+        800;
 
     }
 
@@ -455,7 +640,7 @@
         600;
 
       transition:
-        .2s ease;
+        0.2s ease;
 
     }
 
@@ -466,7 +651,7 @@
         var(--primary);
 
       color:
-        white;
+        #ffffff;
 
     }
 
@@ -485,7 +670,8 @@
     .button-secondary {
 
       border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
       background:
         var(--card);
@@ -505,7 +691,7 @@
 
 
 
-    /* =============================
+    /* ==============================
        PROFILE CARD
     ============================== */
 
@@ -515,7 +701,8 @@
         var(--card);
 
       border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
       border-radius:
         22px;
@@ -553,10 +740,7 @@
         var(--primary);
 
       color:
-        white;
-
-      font-family:
-        "Manrope";
+        #ffffff;
 
       font-weight:
         800;
@@ -571,9 +755,6 @@
 
 
     .profile-card h3 {
-
-      font-family:
-        "Manrope";
 
       font-size:
         22px;
@@ -621,7 +802,8 @@
         14px;
 
       border-bottom:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
     }
 
@@ -629,7 +811,7 @@
     .profile-row:last-child {
 
       border-bottom:
-        0;
+        none;
 
     }
 
@@ -657,8 +839,8 @@
 
 
 
-    /* =============================
-       GENERAL SECTION
+    /* ==============================
+       SECTIONS
     ============================== */
 
     section {
@@ -694,9 +876,6 @@
       margin-top:
         10px;
 
-      font-family:
-        "Manrope";
-
       font-size:
         clamp(
           35px,
@@ -728,7 +907,7 @@
 
 
 
-    /* =============================
+    /* ==============================
        ABOUT
     ============================== */
 
@@ -741,7 +920,8 @@
         grid;
 
       grid-template-columns:
-        1.2fr .8fr;
+        1.2fr
+        0.8fr;
 
       gap:
         25px;
@@ -755,7 +935,8 @@
         var(--card);
 
       border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
       border-radius:
         18px;
@@ -770,9 +951,6 @@
 
       color:
         var(--text-secondary);
-
-      font-size:
-        16px;
 
     }
 
@@ -811,13 +989,17 @@
         14px;
 
       border-bottom:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
     }
 
 
     .fact:last-child {
-      border: 0;
+
+      border-bottom:
+        none;
+
     }
 
 
@@ -833,8 +1015,8 @@
 
 
 
-    /* =============================
-       CAREER
+    /* ==============================
+       TIMELINE
     ============================== */
 
     .timeline {
@@ -850,7 +1032,8 @@
 
     .timeline::before {
 
-      content: "";
+      content:
+        "";
 
       position:
         absolute;
@@ -879,7 +1062,8 @@
         grid;
 
       grid-template-columns:
-        42px 1fr;
+        42px
+        1fr;
 
       gap:
         25px;
@@ -926,7 +1110,8 @@
     .timeline-content {
 
       border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
       background:
         var(--card);
@@ -938,7 +1123,7 @@
         28px;
 
       transition:
-        .2s;
+        0.2s ease;
 
     }
 
@@ -973,9 +1158,6 @@
 
     .timeline-content h3 {
 
-      font-family:
-        "Manrope";
-
       font-size:
         22px;
 
@@ -994,7 +1176,7 @@
 
 
 
-    /* =============================
+    /* ==============================
        SKILLS
     ============================== */
 
@@ -1007,7 +1189,10 @@
         grid;
 
       grid-template-columns:
-        repeat(4,1fr);
+        repeat(
+          4,
+          1fr
+        );
 
       gap:
         15px;
@@ -1021,7 +1206,8 @@
         var(--card);
 
       border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
       border-radius:
         16px;
@@ -1042,7 +1228,7 @@
         space-between;
 
       transition:
-        .2s;
+        0.2s ease;
 
     }
 
@@ -1071,9 +1257,6 @@
 
     .skill-name {
 
-      font-family:
-        "Manrope";
-
       font-size:
         18px;
 
@@ -1084,7 +1267,7 @@
 
 
 
-    /* =============================
+    /* ==============================
        CERTIFICATIONS
     ============================== */
 
@@ -1097,7 +1280,10 @@
         grid;
 
       grid-template-columns:
-        repeat(3,1fr);
+        repeat(
+          3,
+          1fr
+        );
 
       gap:
         15px;
@@ -1111,7 +1297,8 @@
         var(--card);
 
       border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
       border-radius:
         18px;
@@ -1120,7 +1307,7 @@
         25px;
 
       transition:
-        .2s;
+        0.2s ease;
 
     }
 
@@ -1158,9 +1345,6 @@
 
     .certification h3 {
 
-      font-family:
-        "Manrope";
-
       font-size:
         17px;
 
@@ -1185,7 +1369,7 @@
 
 
 
-    /* =============================
+    /* ==============================
        CONTACT
     ============================== */
 
@@ -1195,7 +1379,7 @@
         var(--primary);
 
       color:
-        white;
+        #ffffff;
 
       border-radius:
         24px;
@@ -1207,7 +1391,8 @@
         grid;
 
       grid-template-columns:
-        1.2fr .8fr;
+        1.2fr
+        0.8fr;
 
       gap:
         30px;
@@ -1219,9 +1404,6 @@
 
 
     .contact-card h2 {
-
-      font-family:
-        "Manrope";
 
       font-size:
         clamp(
@@ -1246,7 +1428,7 @@
           255,
           255,
           255,
-          .8
+          0.82
         );
 
     }
@@ -1266,7 +1448,7 @@
     .contact-button {
 
       background:
-        white;
+        #ffffff;
 
       color:
         #111827;
@@ -1287,14 +1469,15 @@
 
 
 
-    /* =============================
+    /* ==============================
        FOOTER
     ============================== */
 
     footer {
 
       border-top:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
       padding:
         30px 0;
@@ -1323,8 +1506,8 @@
 
 
 
-    /* =============================
-       ANIMATION
+    /* ==============================
+       REVEAL ANIMATION
     ============================== */
 
     .reveal {
@@ -1336,8 +1519,10 @@
         translateY(20px);
 
       transition:
-        opacity .6s ease,
-        transform .6s ease;
+        opacity
+        0.6s ease,
+        transform
+        0.6s ease;
 
     }
 
@@ -1354,11 +1539,14 @@
 
 
 
-    /* =============================
+    /* ==============================
        RESPONSIVE
     ============================== */
 
-    @media (max-width: 900px) {
+    @media (
+      max-width:
+      900px
+    ) {
 
       .hero-grid,
       .about-grid,
@@ -1373,7 +1561,10 @@
       .skills-grid {
 
         grid-template-columns:
-          repeat(2,1fr);
+          repeat(
+            2,
+            1fr
+          );
 
       }
 
@@ -1381,7 +1572,10 @@
       .certifications {
 
         grid-template-columns:
-          repeat(2,1fr);
+          repeat(
+            2,
+            1fr
+          );
 
       }
 
@@ -1396,9 +1590,33 @@
     }
 
 
-    @media (max-width: 650px) {
+    @media (
+      max-width:
+      650px
+    ) {
 
-      .nav-links a:not(.linkedin-btn) {
+      .container {
+
+        width:
+          min(
+            100% - 28px,
+            1120px
+          );
+
+      }
+
+
+      .nav-container {
+
+        min-height:
+          64px;
+
+      }
+
+
+      .nav-links a:not(
+        .linkedin-btn
+      ) {
 
         display:
           none;
@@ -1406,10 +1624,27 @@
       }
 
 
+      .nav-right {
+
+        gap:
+          8px;
+
+      }
+
+
+      .linkedin-btn {
+
+        padding:
+          9px 12px;
+
+      }
+
+
       .hero {
 
-        padding-top:
-          85px;
+        padding:
+          80px 0
+          60px;
 
       }
 
@@ -1417,10 +1652,26 @@
       .hero h1 {
 
         font-size:
-          48px;
+          46px;
 
         letter-spacing:
           -2px;
+
+      }
+
+
+      .hero-description {
+
+        font-size:
+          16px;
+
+      }
+
+
+      section {
+
+        padding:
+          70px 0;
 
       }
 
@@ -1430,6 +1681,14 @@
 
         grid-template-columns:
           1fr;
+
+      }
+
+
+      .profile-row {
+
+        align-items:
+          flex-start;
 
       }
 
@@ -1457,44 +1716,54 @@
       reduce
     ) {
 
-      * {
+      html {
 
         scroll-behavior:
-          auto !important;
+          auto;
 
-        animation:
-          none !important;
+      }
 
-        transition:
-          none !important;
+
+      *,
+      *::before,
+      *::after {
+
+        animation-duration:
+          0.01ms !important;
+
+        transition-duration:
+          0.01ms !important;
 
       }
 
     }
 
   </style>
+
 </head>
 
 
 <body>
 
 
-<!-- =============================
-     NAVIGATION
-============================== -->
-
 <header class="navbar">
 
   <div class="container nav-container">
 
-    <a href="#" class="logo">
+
+    <a
+      href="./"
+      class="logo"
+    >
 
       Ajay<span>.</span>
 
     </a>
 
 
+
     <div class="nav-right">
+
 
       <nav class="nav-links">
 
@@ -1514,10 +1783,13 @@
           Certifications
         </a>
 
+
         <a
-          class="linkedin-btn"
           href="https://www.linkedin.com/in/ajay-krishnaa"
-          target="_blank">
+          target="_blank"
+          rel="noopener noreferrer"
+          class="linkedin-btn"
+        >
 
           LinkedIn ↗
 
@@ -1526,203 +1798,20 @@
       </nav>
 
 
-      <!-- THEME SWITCH -->
 
       <button
         id="themeToggle"
         class="theme-toggle"
         type="button"
-        aria-label="Switch theme">
+        aria-label="Switch theme"
+        title="Switch theme"
+      >
 
         <svg
           id="themeIcon"
-          class="theme-icon"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2">
-
-          <path
-            d="M12 3a9 9 0 1 0 9 9
-            7 7 0 0 1-9-9z"/>
-
-        </svg>
-
-      </button>
-
-    </div>
-
-  </div>
-
-</header>
-
-
-
-<!-- =============================
-     HERO
-============================== -->
-
-<main>
-
-
-<section class="hero">
-
-  <div class="container hero-grid">
-
-
-    <div class="reveal">
-
-      <div class="availability">
-
-        <span class="status-dot"></span>
-
-        Software Engineer
-
-      </div>
-
-
-      <h1>
-
-        Building reliable
-        software and
-
-        <span>
-          learning what comes next.
-        </span>
-
-      </h1>
-
-
-      <p class="hero-description">
-
-        I'm Ajay Krishnaa M, a software engineer
-        with professional experience across Virtusa
-        and Accenture.
-
-        I enjoy working across software engineering,
-        cloud technologies and modern development
-        practices while continuously exploring
-        emerging technologies such as Generative AI.
-
-      </p>
-
-
-      <div class="hero-actions">
-
-        <a
-          href="#experience"
-          class="button button-primary">
-
-          View experience →
-
-        </a>
-
-
-        <a
-          href="https://www.linkedin.com/in/ajay-krishnaa"
-          target="_blank"
-          class="button button-secondary">
-
-          LinkedIn Profile
-
-        </a>
-
-      </div>
-
-    </div>
-
-
-
-    <aside class="profile-card reveal">
-
-
-      <div class="avatar">
-
-        AK
-
-      </div>
-
-
-      <h3>
-
-        Ajay Krishnaa M
-
-      </h3>
-
-
-      <p class="profile-role">
-
-        Software Engineer
-
-      </p>
-
-
-      <div class="profile-info">
-
-
-        <div class="profile-row">
-
-          <span>
-            Current
-          </span>
-
-          <strong>
-            Accenture
-          </strong>
-
-        </div>
-
-
-        <div class="profile-row">
-
-          <span>
-            Previously
-          </span>
-
-          <strong>
-            Virtusa
-          </strong>
-
-        </div>
-
-
-        <div class="profile-row">
-
-          <span>
-            Education
-          </span>
-
-          <strong>
-            KPRIET
-          </strong>
-
-        </div>
-
-
-        <div class="profile-row">
-
-          <span>
-            Location
-          </span>
-
-          <strong>
-            Coimbatore, India
-          </strong>
-
-        </div>
-
-
-        <div class="profile-row">
-
-          <span>
-            Interests
-          </span>
-
-          <strong>
-            Software · Cloud · AI
-          </strong>
-
-        </div>
-
-
-        
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-lin
