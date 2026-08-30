@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ajay Krishnaa — Systems & Automation</title>
+  <title>Ajay Krishnaa | Senior Systems & Platform Engineer</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #050505;
-      --surface: #0e0e11;
-      --surface-border: #1f1f28;
-      --accent: #ff3366;
-      --accent-glow: rgba(255, 51, 102, 0.25);
-      --accent-alt: #7000ff;
-      --text: #f0f0f5;
-      --text-muted: #71717a;
-      --font-display: 'Space Grotesk', sans-serif;
-      --font-mono: 'Space Mono', monospace;
+      --bg: #07090e;
+      --card-bg: rgba(15, 23, 42, 0.6);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent-cyan: #38bdf8;
+      --accent-indigo: #6366f1;
+      --accent-emerald: #10b981;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+      --font-main: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
     }
 
     * {
@@ -32,15 +32,14 @@
     body {
       background-color: var(--bg);
       color: var(--text);
-      font-family: var(--font-display);
+      font-family: var(--font-main);
       overflow-x: hidden;
-      line-height: 1.5;
-      selection-background-color: var(--accent);
-      selection-color: #fff;
+      line-height: 1.6;
+      min-height: 100vh;
     }
 
-    /* Interactive 3D Wireframe Canvas */
-    #mesh-canvas {
+    /* Interactive Background Canvas */
+    #ambient-canvas {
       position: fixed;
       top: 0;
       left: 0;
@@ -48,59 +47,519 @@
       height: 100vh;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.45;
     }
 
-    /* Structural Grid Overlay */
-    .grid-overlay {
+    /* Ambient Cursor Glow */
+    .glow-spotlight {
       position: fixed;
-      inset: 0;
-      background-image: 
-        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
-      background-size: 60px 60px;
+      top: 0;
+      left: 0;
+      width: 650px;
+      height: 650px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, rgba(99, 102, 241, 0.04) 50%, transparent 70%);
+      transform: translate(-50%, -50%);
       pointer-events: none;
       z-index: 1;
     }
 
-    /* Layout */
+    /* Page Container */
     .wrapper {
       position: relative;
       z-index: 2;
-      max-width: 1200px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 6rem 2rem 4rem 2rem;
     }
 
-    /* Minimalist Top HUD Header */
-    header {
-      padding: 2.5rem 0;
+    /* Hero & Profile Intro */
+    .hero {
+      margin-bottom: 5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: var(--accent-emerald);
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      font-weight: 500;
+      margin-bottom: 1.75rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 10px var(--accent-emerald);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 1.5rem;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 40%, var(--accent-cyan) 80%, var(--accent-indigo) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .role-title {
+      font-size: 1.25rem;
+      color: var(--text-dim);
+      font-weight: 400;
+      max-width: 750px;
+      margin-bottom: 2.5rem;
+    }
+
+    .role-title strong {
+      color: #fff;
+    }
+
+    .cta-container {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.85rem 1.8rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));
+      color: #0f172a;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.6);
+      color: #000;
+    }
+
+    .btn-outline {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-outline:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--card-border);
+    }
+
+    /* About Section */
+    .about-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      backdrop-filter: blur(16px);
+      margin-bottom: 4.5rem;
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    .about-card p + p {
+      margin-top: 1.25rem;
+    }
+
+    .highlight {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Experience Timeline */
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 4.5rem;
+    }
+
+    .exp-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      backdrop-filter: blur(16px);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .exp-card:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-3px);
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .exp-role {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .exp-company {
+      color: var(--accent-cyan);
+      font-weight: 500;
+      font-size: 1rem;
+      margin-top: 2px;
+    }
+
+    .exp-period {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      padding: 4px 12px;
+      border-radius: 9999px;
+    }
+
+    .exp-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      color: var(--text-dim);
+      font-size: 0.95rem;
+    }
+
+    .exp-points li {
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .exp-points li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--accent-cyan);
+      font-weight: bold;
+    }
+
+    /* Domain Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 4.5rem;
+    }
+
+    .skill-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s;
+    }
+
+    .skill-box:hover {
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .skill-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      transition: all 0.2s;
+    }
+
+    .skill-box:hover .tag {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding-top: 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid var(--surface-border);
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+      color: var(--text-dim);
+      font-size: 0.9rem;
     }
 
-    .brand-tag {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      text-transform: uppercase;
+    footer a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      transition: color 0.2s;
     }
 
-    .brand-tag .indicator {
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      box-shadow: 0 0 10px var(--accent);
-      border-radius: 50%;
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Canvas -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Interactive Spotlight -->
+  <div class="glow-spotlight" id="glow"></div>
+
+  <div class="wrapper">
+    <!-- Hero / Profile Banner -->
+    <section class="hero">
+      <div class="badge">
+        <span class="status-dot"></span> Senior Analyst & Platform Engineer
+      </div>
+      <h1>
+        I'm <span class="gradient-text">Ajay Krishnaa</span>.
+      </h1>
+      <p class="role-title">
+        <strong>4.5+ years of experience</strong> engineering scalable enterprise platforms, streamlining continuous integration & delivery ecosystems, and architecting resilient microservices backbones.
+      </p>
+
+      <div class="cta-container">
+        <a href="https://www.linkedin.com/in/ajay-krishnaa" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          Connect on LinkedIn ↗
+        </a>
+        <a href="#experience" class="btn btn-outline">
+          View Experience ↓
+        </a>
+      </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-card">
+        <p>
+          I am a platform and systems engineer dedicated to <span class="highlight">eliminating operational friction</span> and building robust software delivery lifecycles. With over four and a half years in the enterprise technology domain, I specialize in crafting standardized continuous integration pipelines, composite workflow architectures, and resilient backend systems.
+        </p>
+        <p>
+          My technical focus centers on <span class="highlight">enterprise CI/CD automation, cloud platform resilience, and intelligent developer enablement</span>. I am driven by clean abstractions, predictable automated deployments, and building infrastructure that scales securely and reliably.
+        </p>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+      <h2 class="section-title">Professional Experience</h2>
+      <div class="experience-list">
+        
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <h3 class="exp-role">Senior Analyst</h3>
+              <div class="exp-company">Accenture</div>
+            </div>
+            <div class="exp-period">May 2022 — Present</div>
+          </div>
+          <ul class="exp-points">
+            <li>Architecting and standardizing enterprise-grade CI/CD platforms utilizing modular, reusable GitHub Actions workflows across multi-stack environments (Java, Node.js, .NET, Python).</li>
+            <li>Engineering secure, automated pipeline governance, policy enforcement, and proxy tunnel integrations for high-compliance developer workflows.</li>
+            <li>Driving platform stability, optimizing build velocity, and implementing automated testing checkpoints to maximize deployment reliability.</li>
+            <li>Collaborating with cross-functional engineering teams to accelerate feature delivery cycles and transition legacy delivery models to modern cloud platforms.</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Core Domains & Tooling -->
+    <section id="capabilities">
+      <h2 class="section-title">Core Capabilities & Stack</h2>
+      <div class="skills-grid">
+        
+        <div class="skill-box">
+          <div class="skill-title">⚡ CI/CD & Platform Ops</div>
+          <div class="tags">
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">Composite Workflows</span>
+            <span class="tag">Automated Testing</span>
+            <span class="tag">Release Governance</span>
+          </div>
+        </div>
+
+        <div class="skill-box">
+          <div class="skill-title">🏗️ Systems & Backend</div>
+          <div class="tags">
+            <span class="tag">Microservices</span>
+            <span class="tag">Clean Architecture</span>
+            <span class="tag">REST APIs</span>
+            <span class="tag">State Management</span>
+          </div>
+        </div>
+
+        <div class="skill-box">
+          <div class="skill-title">🔒 Enterprise Integration</div>
+          <div class="tags">
+            <span class="tag">Proxy Configurations</span>
+            <span class="tag">DevOps Automation</span>
+            <span class="tag">Pipeline Security</span>
+            <span class="tag">Workflow Optimization</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div>Ajay Krishnaa — Senior Systems & Platform Engineer</div>
+      <div>
+        <a href="https://www.linkedin.com/in/ajay-krishnaa" target="_blank" rel="noopener noreferrer">LinkedIn Profile ↗</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // 1. Mouse Tracking Spotlight
+    const glow = document.getElementById('glow');
+    window.addEventListener('mousemove', (e) => {
+      glow.style.transform = `translate(${e.clientX - 325}px, ${e.clientY - 325}px)`;
+    });
+
+    // 2. Interactive Constellation Canvas
+    const canvas = document.getElementById('ambient-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.3;
+        this.radius = Math.random() * 1.5 + 0.5;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0) this.x = width;
+        if (this.x > width) this.x = 0;
+        if (this.y < 0) this.y = height;
+        if (this.y > height) this.y = 0;
+      }
+      draw() {
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
 
-    .hud-meta {
+    const particles = Array.from({ length: 45 }, () => new Particle());
+
+    function render() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 100) {
+            ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 * (1 - dist / 100)})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      requestAnimationFrame(render);
+    }
+    render();
+  </script>
+</body>
+</html>
+.hud-meta {
       color: var(--text-muted);
       display: flex;
       gap: 2rem;
